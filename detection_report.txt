@@ -1,0 +1,5 @@
+
+CloudSentinel Security Report
+-----------------------------
+Failed login attempts: 5
+Severity: HIGH
