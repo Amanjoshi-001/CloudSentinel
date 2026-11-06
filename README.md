@@ -92,9 +92,6 @@ Press `Ctrl + C` to stop the automatic monitoring loop.
 - Automate security monitoring
 - Practice Git and GitHub version control
 
-## 📈 Project Status
-
-**Day 6 — Automatic SSH Monitoring and GitHub Integration Completed**
 
 ## 👨‍💻 Author
 
