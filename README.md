@@ -1,89 +1,100 @@
-CloudSentinel – AWS Cloud Security Monitoring Project
+# 🛡️ CloudSentinel — AWS Cloud Security Monitoring
 
-Project Overview
+## 📌 Project Overview
 
-CloudSentinel is a beginner-friendly AWS cloud security project designed to monitor SSH login activity on an Amazon EC2 instance and detect suspicious login attempts.
+CloudSentinel is a beginner-friendly AWS cloud security monitoring project built using Python and Amazon EC2.
 
-Technologies Used
+The project monitors SSH authentication activity on a Linux server, detects failed login attempts, classifies security events based on severity, and generates security reports.
 
-AWS EC2
+This project demonstrates practical cloud security concepts, Linux log monitoring, Python automation, and GitHub version control.
 
-Amazon Linux 2023
+## 🛠️ Technologies Used
 
-Python 3
+- **AWS EC2** — Cloud server hosting
+- **Amazon Linux 2023** — Operating system
+- **Python 3** — Security monitoring and log analysis
+- **Linux SSH** — Secure remote server access
+- **Linux Journal Logs** — SSH authentication event collection
+- **Git & GitHub** — Version control and project hosting
 
-Linux SSH
+## 🚀 Project Features
 
-Linux Journal Logs
+- Analyze sample SSH authentication logs using Python
+- Detect failed SSH password attempts
+- Classify security severity as LOW, MEDIUM, or HIGH
+- Monitor real SSH authentication events from Linux journal logs
+- Automatically execute SSH monitoring every 10 seconds
+- Generate security monitoring reports
+- Track project changes using Git and GitHub
 
-Project Features
+## 📂 Project Structure
 
-Sample SSH log analysis
+```text
+CloudSentinel/
+├── app.py
+├── detect_logs.py
+├── sample_ssh.log
+├── detection_report.txt
+├── real_ssh_monitor.py
+├── real_ssh_report.txt
+├── auto_monitor.py
+├── security_report.txt
+├── README.md
+└── .gitignore
+```
 
-Detection of failed SSH password attempts
+## ⚙️ How to Run
 
-Severity classification: LOW, MEDIUM, HIGH
+### 1. Analyze Sample SSH Logs
 
-Real-time server SSH log monitoring
-
-Automatic monitoring every 10 seconds
-
-Security report generation
-
-Project Files
-
-app.py – Application file
-
-detect_logs.py – Sample SSH log detection
-
-sample_ssh.log – Sample SSH activity logs
-
-detection_report.txt – Sample log analysis report
-
-real_ssh_monitor.py – Real SSH monitoring script
-
-real_ssh_report.txt – Real SSH monitoring report
-
-auto_monitor.py – Automatic SSH monitoring loop
-
-security_report.txt – Security report
-
-How to Run
-
-Analyze Sample Logs
-
+```bash
 python3 detect_logs.py
+```
 
-Monitor Real SSH Logs
+### 2. Monitor Real SSH Activity
 
+```bash
 python3 real_ssh_monitor.py
+```
 
-Start Automatic Monitoring
+### 3. Start Automatic Monitoring
 
+```bash
 python3 auto_monitor.py
+```
 
-The automatic monitor checks SSH activity every 10 seconds and updates the monitoring report.
+The automatic monitor executes the real SSH monitoring script every 10 seconds.
 
-Severity Levels
+Press `Ctrl + C` to stop the automatic monitoring loop.
 
-LOW: 0–2 failed SSH password attempts
+## 🚨 Severity Classification
 
-MEDIUM: 3–4 failed SSH password attempts
+| Severity | Failed SSH Password Attempts |
+|---|---|
+| LOW | 0–2 |
+| MEDIUM | 3–4 |
+| HIGH | 5 or more |
 
-HIGH: 5 or more failed SSH password attempts
+## ☁️ AWS Environment
 
-Learning Objectives
+- **Cloud Provider:** Amazon Web Services
+- **Service:** Amazon EC2
+- **Region:** Mumbai (ap-south-1)
+- **Operating System:** Amazon Linux 2023
+- **Instance Type:** t3.micro
 
-Understand AWS EC2
+## 🎯 Learning Objectives
 
-Learn Linux SSH monitoring
+- Understand AWS EC2 cloud infrastructure
+- Learn Linux SSH authentication monitoring
+- Analyze security logs using Python
+- Detect suspicious authentication activity
+- Automate security monitoring
+- Practice Git and GitHub version control
 
-Analyze security logs using Python
 
-Detect suspicious authentication activity
+## 👨‍💻 Author
 
-Automate security monitoring
+Aman Joshi
 
-Project Status
-
-Day 6 – Automatic SSH Monitoring Implemented
+GitHub: [Amanjoshi-001](https://github.com/Amanjoshi-001)
