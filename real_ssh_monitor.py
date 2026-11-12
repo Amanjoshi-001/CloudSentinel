@@ -10,7 +10,7 @@ command = [
     "-u",
     "sshd",
     "--since",
-    "today",
+    "24 hours ago",
     "--no-pager"
 ]
 
@@ -37,11 +37,15 @@ print("Failed SSH password attempts:", failed_count)
 print("Severity:", severity)
 
 if severity == "HIGH":
-    print("ALERT: Critical suspicious SSH activity!")
+    alert_message = "CRITICAL: Suspicious SSH activity detected!"
+    print("ALERT:", alert_message)
 elif severity == "MEDIUM":
-    print("ALERT: Suspicious SSH activity detected!")
+    alert_message = "WARNING: Multiple failed SSH login attempts!"
+    print("ALERT:", alert_message)
 else:
+    alert_message = "NORMAL: No significant suspicious activity."
     print("Status: Normal")
+
 report = f"""
 Timestamp: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 CloudSentinel Real SSH Monitoring Report
@@ -49,6 +53,7 @@ CloudSentinel Real SSH Monitoring Report
 Successful SSH logins: {accepted_count}
 Failed SSH password attempts: {failed_count}
 Severity: {severity}
+Alert: {alert_message}
 """
 
 with open("real_ssh_report.txt", "w") as report_file:
