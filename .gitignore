@@ -6,3 +6,9 @@ dashboard-env/
 *.save
 ssh_login_history.log
 real_ssh_report.txt
+
+# CloudSentinel backups and generated reports
+*_backup.py
+dashboard_before_cleanup.py
+live_ip_report.txt
+real_ssh_history.log
