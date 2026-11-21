@@ -2,6 +2,85 @@ import streamlit as st
 import subprocess
 import sys
 import pandas as pd
+import boto3
+from datetime import datetime, timedelta, timezone
+
+def get_cloudwatch_cpu():
+    cloudwatch = boto3.client("cloudwatch", region_name="ap-south-1")
+
+    end_time = datetime.now(timezone.utc)
+    start_time = end_time - timedelta(hours=1)
+
+    response = cloudwatch.get_metric_statistics(
+        Namespace="AWS/EC2",
+        MetricName="CPUUtilization",
+        Dimensions=[
+            {
+                "Name": "InstanceId",
+                "Value": "i-045452cdc51cb0be1"
+            }
+        ],
+        StartTime=start_time,
+        EndTime=end_time,
+        Period=300,
+        Statistics=["Average"]
+    )
+
+    datapoints = sorted(
+        response["Datapoints"],
+        key=lambda point: point["Timestamp"]
+    )
+
+    return pd.DataFrame(datapoints)
+    
+def get_ec2_health():
+    cloudwatch = boto3.client("cloudwatch", region_name="ap-south-1")
+
+    end_time = datetime.now(timezone.utc)
+    start_time = end_time - timedelta(hours=1)
+
+    health_metrics = {}
+
+    for metric in ["StatusCheckFailed_Instance", "StatusCheckFailed_System"]:
+        response = cloudwatch.get_metric_statistics(
+            Namespace="AWS/EC2",
+            MetricName=metric,
+            Dimensions=[
+                {
+                    "Name": "InstanceId",
+                    "Value": "i-045452cdc51cb0be1"
+                }
+            ],
+            StartTime=start_time,
+            EndTime=end_time,
+            Period=300,
+            Statistics=["Maximum"]
+        )
+
+        datapoints = sorted(
+            response["Datapoints"],
+            key=lambda point: point["Timestamp"]
+        )
+
+        health_metrics[metric] = (
+            datapoints[-1]["Maximum"] if datapoints else None
+        )
+
+    return health_metrics
+
+def get_cloudwatch_alarm():
+    cloudwatch = boto3.client("cloudwatch", region_name="ap-south-1")
+
+    response = cloudwatch.describe_alarms(
+        AlarmNames=["CloudSentinel-High-CPU-Alarm"]
+    )
+
+    alarms = response["MetricAlarms"]
+
+    if alarms:
+        return alarms[0]["StateValue"]
+
+    return "NOT_FOUND"
 
 st.set_page_config(
     page_title="CloudSentinel Security Dashboard",
@@ -44,6 +123,71 @@ def security_dashboard():
 
     except subprocess.TimeoutExpired:
         st.error("SSH monitoring script timed out.")
+          
+           # CLOUDWATCH CPU MONITORING
+    st.subheader("AWS CloudWatch CPU Monitoring")
+
+    try:
+        cpu_data = get_cloudwatch_cpu()
+
+        if not cpu_data.empty:
+            st.line_chart(
+                cpu_data,
+                x="Timestamp",
+                y="Average"
+            )
+            st.metric(
+                "Latest CPU Usage",
+                f"{cpu_data.iloc[-1]['Average']:.2f}%"
+            )
+        else:
+            st.info("No CloudWatch CPU metrics available yet.")
+
+        alarm_state = get_cloudwatch_alarm()
+     
+        if alarm_state == "OK":
+            st.success("🟢 CloudWatch CPU Alarm: OK")
+
+        elif alarm_state == "ALARM":
+            st.error("🔴 CloudWatch CPU Alarm: ALARM")
+
+        elif alarm_state == "INSUFFICIENT_DATA":
+            st.warning("🟡 CloudWatch CPU Alarm: INSUFFICIENT DATA")
+
+        else:
+            st.info(f"CloudWatch CPU Alarm: {alarm_state}")
+
+    except Exception as e:
+        st.error(f"CloudWatch monitoring error: {e}")      
+       
+    # EC2 INSTANCE HEALTH MONITORING
+    st.subheader("EC2 Instance Health")
+
+    try:
+        health = get_ec2_health()
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            instance_status = health["StatusCheckFailed_Instance"]
+            st.metric(
+                "Instance Status",
+                "Healthy" if instance_status == 0
+                else "Failed" if instance_status is not None
+                else "No Data"
+            )
+
+        with col2:
+            system_status = health["StatusCheckFailed_System"]
+            st.metric(
+                "System Status",
+                "Healthy" if system_status == 0
+                else "Failed" if system_status is not None
+                else "No Data"
+            )
+
+    except Exception as e:
+        st.error(f"EC2 health monitoring error: {e}")
 
        # RECENT SSH EVENTS
     st.subheader("Recent SSH Events")
@@ -180,6 +324,26 @@ def security_dashboard():
 
     except FileNotFoundError:
         st.warning("Security report not found.")
+
+
+    # LIVE IP ACTIVITY
+    st.subheader("Live IP Activity")
+
+    try:
+        subprocess.run(
+            [sys.executable, "live_ip_detector.py"],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+
+        with open("live_ip_report.txt", "r") as file:
+            live_report = file.read()
+
+        st.text(live_report)
+
+    except Exception as e:
+        st.warning(f"Live IP monitoring error: {e}")
 
     # DISPLAY RISK LEVEL
     if threat_level == "HIGH":
