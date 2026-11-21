@@ -1,100 +1,165 @@
-# 🛡️ CloudSentinel — AWS Cloud Security Monitoring
+🛡️ CloudSentinel — AWS Cloud Security Monitoring
 
-## 📌 Project Overview
+📌 Project Overview
 
-CloudSentinel is a beginner-friendly AWS cloud security monitoring project built using Python and Amazon EC2.
+CloudSentinel is an AWS cloud security monitoring project built using Python, Amazon EC2, and AWS CloudWatch.
 
-The project monitors SSH authentication activity on a Linux server, detects failed login attempts, classifies security events based on severity, and generates security reports.
+The project monitors SSH authentication activity on a Linux server, detects failed login attempts, identifies suspicious IP activity, and generates security reports.
 
-This project demonstrates practical cloud security concepts, Linux log monitoring, Python automation, and GitHub version control.
+It also provides a Streamlit dashboard for monitoring security events, CPU utilization, CloudWatch alarm status, and EC2 instance health.
 
-## 🛠️ Technologies Used
+This project demonstrates practical cloud security concepts, Linux log monitoring, Python automation, AWS monitoring services, and GitHub version control.
 
-- **AWS EC2** — Cloud server hosting
-- **Amazon Linux 2023** — Operating system
-- **Python 3** — Security monitoring and log analysis
-- **Linux SSH** — Secure remote server access
-- **Linux Journal Logs** — SSH authentication event collection
-- **Git & GitHub** — Version control and project hosting
+🛠️ Technologies Used
 
-## 🚀 Project Features
+AWS EC2 — Cloud server hosting
 
-- Analyze sample SSH authentication logs using Python
-- Detect failed SSH password attempts
-- Classify security severity as LOW, MEDIUM, or HIGH
-- Monitor real SSH authentication events from Linux journal logs
-- Automatically execute SSH monitoring every 10 seconds
-- Generate security monitoring reports
-- Track project changes using Git and GitHub
+Amazon Linux 2023 — Operating system
 
-## 📂 Project Structure
+AWS CloudWatch — CPU metrics and alarm monitoring
 
-```text
+AWS SNS — Email notification integration
+
+Python 3 — Security monitoring and log analysis
+
+Streamlit — Security monitoring dashboard
+
+Boto3 — AWS SDK for Python
+
+Linux SSH and Journal Logs — Authentication event monitoring
+
+Git & GitHub — Version control and project hosting
+
+🚀 Project Features
+
+Analyze sample SSH authentication logs using Python
+
+Detect failed SSH password attempts
+
+Classify security severity as LOW, MEDIUM, or HIGH
+
+Monitor real SSH authentication events from Linux journal logs
+
+Identify failed SSH login attempts by source IP
+
+Generate security monitoring reports
+
+Automatically execute SSH monitoring every 10 seconds
+
+Display security information through a Streamlit dashboard
+
+Monitor AWS EC2 CPU utilization using CloudWatch
+
+Display CloudWatch CPU alarm status
+
+Monitor EC2 instance and system health checks
+
+Configure SNS email notifications for CloudWatch alarm events
+
+📂 Project Structure
+
 CloudSentinel/
 ├── app.py
+├── dashboard.py
 ├── detect_logs.py
+├── live_ip_detector.py
+├── real_ssh_monitor.py
+├── auto_monitor.py
+├── analyze_ssh_history.py
+├── cloudwatch_monitor.py
 ├── sample_ssh.log
 ├── detection_report.txt
-├── real_ssh_monitor.py
-├── real_ssh_report.txt
-├── auto_monitor.py
-├── security_report.txt
 ├── README.md
 └── .gitignore
-```
 
-## ⚙️ How to Run
+Additional monitoring reports and SSH history files are generated when the scripts run.
 
-### 1. Analyze Sample SSH Logs
+⚙️ How to Run
 
-```bash
+1. Activate the Python virtual environment
+
+source dashboard-env/bin/activate
+
+2. Analyze Sample SSH Logs
+
 python3 detect_logs.py
-```
 
-### 2. Monitor Real SSH Activity
+3. Monitor Real SSH Activity
 
-```bash
 python3 real_ssh_monitor.py
-```
 
-### 3. Start Automatic Monitoring
+4. Start Automatic SSH Monitoring
 
-```bash
 python3 auto_monitor.py
-```
 
 The automatic monitor executes the real SSH monitoring script every 10 seconds.
 
-Press `Ctrl + C` to stop the automatic monitoring loop.
+Press Ctrl + C to stop automatic monitoring.
 
-## 🚨 Severity Classification
+5. Start the Security Dashboard
 
-| Severity | Failed SSH Password Attempts |
-|---|---|
-| LOW | 0–2 |
-| MEDIUM | 3–4 |
-| HIGH | 5 or more |
+streamlit run dashboard.py
 
-## ☁️ AWS Environment
+Open the dashboard through your SSH tunnel at:
 
-- **Cloud Provider:** Amazon Web Services
-- **Service:** Amazon EC2
-- **Region:** Mumbai (ap-south-1)
-- **Operating System:** Amazon Linux 2023
-- **Instance Type:** t3.micro
+http://localhost:8501
 
-## 🎯 Learning Objectives
+6. Run AWS CloudWatch CPU Monitoring
 
-- Understand AWS EC2 cloud infrastructure
-- Learn Linux SSH authentication monitoring
-- Analyze security logs using Python
-- Detect suspicious authentication activity
-- Automate security monitoring
-- Practice Git and GitHub version control
+python3 cloudwatch_monitor.py
 
+🚨 Severity Classification
 
-## 👨‍💻 Author
+Severity
+
+Failed SSH Password Attempts
+
+LOW
+
+0–2
+
+MEDIUM
+
+3–4
+
+HIGH
+
+5 or more
+
+☁️ AWS Environment
+
+Cloud Provider: Amazon Web Services
+
+Services: EC2, CloudWatch, SNS
+
+Region: Mumbai (ap-south-1)
+
+Operating System: Amazon Linux 2023
+
+Instance Type: t3.micro
+
+🎯 Learning Objectives
+
+Understand AWS EC2 cloud infrastructure
+
+Learn Linux SSH authentication monitoring
+
+Analyze security logs using Python
+
+Detect suspicious authentication activity
+
+Automate security monitoring
+
+Monitor AWS infrastructure using CloudWatch
+
+Understand CloudWatch alarms and SNS notifications
+
+Build a security dashboard using Streamlit
+
+Practice Git and GitHub version control
+
+👨‍💻 Author
 
 Aman Joshi
 
-GitHub: [Amanjoshi-001](https://github.com/Amanjoshi-001)
+GitHub: Amanjoshi-001
