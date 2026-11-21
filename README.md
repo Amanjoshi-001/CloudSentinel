@@ -1,7 +1,6 @@
 🛡️ CloudSentinel — AWS Cloud Security Monitoring
 
 📌 Project Overview
-
 CloudSentinel is an AWS cloud security monitoring project built using Python, Amazon EC2, and AWS CloudWatch.
 
 The project monitors SSH authentication activity on a Linux server, detects failed login attempts, identifies suspicious IP activity, and generates security reports.
@@ -9,6 +8,10 @@ The project monitors SSH authentication activity on a Linux server, detects fail
 It also provides a Streamlit dashboard for monitoring security events, CPU utilization, CloudWatch alarm status, and EC2 instance health.
 
 This project demonstrates practical cloud security concepts, Linux log monitoring, Python automation, AWS monitoring services, and GitHub version control.
+
+## 📸 Dashboard Preview
+
+![CloudSentinel Dashboard](cloudsentinel-dashboard.png)
 
 🛠️ Technologies Used
 
