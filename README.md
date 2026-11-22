@@ -9,6 +9,10 @@ It also provides a Streamlit dashboard for monitoring security events, CPU utili
 
 This project demonstrates practical cloud security concepts, Linux log monitoring, Python automation, AWS monitoring services, and GitHub version control.
 
+## 🏗️ CloudSentinel Architecture
+
+![CloudSentinel Architecture](cloudsentinel-architecture.png)
+
 ## 📸 Dashboard Preview
 
 ![CloudSentinel Dashboard](cloudsentinel-dashboard.png)
